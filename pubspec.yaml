@@ -81,25 +81,3 @@ flutter:
                 weight: 700
               - asset: resources/fonts/lexend/Lexend-ExtraBold.ttf
                 weight: 800
-
-              - asset: resources/fonts/lexend/Lexend-ExtraLightItalic.ttf
-                style: italic
-                weight: 200
-              - asset: resources/fonts/lexend/Lexend-LightItalic.ttf
-                style: italic
-                weight: 300
-              - asset: resources/fonts/lexend/Lexend-Italic.ttf
-                style: italic
-                weight: 400
-              - asset: resources/fonts/lexend/Lexend-MediumItalic.ttf
-                style: italic
-                weight: 500
-              - asset: resources/fonts/lexend/Lexend-SemiBoldItalic.ttf
-                style: italic
-                weight: 600
-              - asset: resources/fonts/lexend/Lexend-BoldItalic.ttf
-                style: italic
-                weight: 700
-              - asset: resources/fonts/lexend/Lexend-ExtraBoldItalic.ttf
-                style: italic
-                weight: 800
