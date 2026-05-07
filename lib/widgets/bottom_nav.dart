@@ -5,34 +5,47 @@ import '../app/routes/app_routes.dart';
 import '../app/theme/app_colors.dart';
 
 class BottomNav extends StatelessWidget {
-  const BottomNav({super.key});
+
+  final int currentIndex;
+
+  const BottomNav({
+    super.key,
+    required this.currentIndex,
+  });
 
   @override
   Widget build(BuildContext context) {
+
     return BottomNavigationBar(
-      currentIndex: 0,
+
+      currentIndex: currentIndex,
+
       type: BottomNavigationBarType.fixed,
+
       selectedItemColor: AppColors.primary,
       unselectedItemColor: Colors.black54,
 
       onTap: (index) {
-        print (index);
-        if (index == 1) {
-          Get.toNamed(Routes.PEST_DETECTION);
-        }
 
-        if (index == 2) {
-          Get.toNamed(Routes.DETECTION_RESULT);
-        }
+        switch (index) {
 
-        if (index == 3) {
-          Get.toNamed(Routes.AI_CHAT);
-        }
+         
+          case 0:
+            Get.toNamed(Routes.HOME);
+            break;
+      
+          case 1:
+            Get.toNamed(Routes.PEST_DETECTION);
+            break;
 
-        if (index == 4) {
-        print("ALERT CLICKED");
-        Get.toNamed(Routes.ALERT);
-      }
+          case 2:
+            Get.toNamed(Routes.AI_CHAT);
+            break;
+
+          case 3:
+            Get.toNamed(Routes.ALERT);
+            break;
+        }
       },
 
       items: const [
@@ -40,11 +53,6 @@ class BottomNav extends StatelessWidget {
         BottomNavigationBarItem(
           icon: Icon(Icons.eco),
           label: 'Farm',
-        ),
-
-        BottomNavigationBarItem(
-          icon: Icon(Icons.bug_report_outlined),
-          label: 'Pests',
         ),
 
         BottomNavigationBarItem(

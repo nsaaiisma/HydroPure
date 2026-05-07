@@ -17,9 +17,6 @@ class DetectionResultView
 
     return Scaffold(
       backgroundColor: const Color(0xFFF3F5F4),
-
-      bottomNavigationBar: const BottomNav(),
-
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(20),

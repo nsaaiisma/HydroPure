@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:hydropure/app/routes/app_routes.dart';
 import 'package:hydropure/app/theme/app_colors.dart';
 
 class LoginView extends StatefulWidget {
@@ -129,7 +131,7 @@ class _LoginViewState extends State<LoginView> {
                             ),
                             minimumSize: const Size(double.infinity, 56),
                           ),
-                          onPressed: () {},
+                          onPressed: () => Get.offAllNamed(Routes.HOME),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             spacing: 12,
@@ -204,27 +206,29 @@ class _LoginViewState extends State<LoginView> {
                         ],
                       ),
                     ),
-                    RichText(
-                      text: const TextSpan(
-                        children: [
-                          TextSpan(
-                            text: "Don’t have an account? ",
-                            style: TextStyle(
-                              color: Color(0xFF3B3B3B),
-                              fontSize: 14,
-                              fontWeight: FontWeight.w500,
-                            ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Text(
+                          "Don’t have an account? ",
+                          style: TextStyle(
+                            color: Color(0xFF3B3B3B),
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500,
                           ),
-                          TextSpan(
-                            text: 'Sign Up',
+                        ),
+                        TextButton(
+                          onPressed: () => Get.toNamed(Routes.REGISTER),
+                          child: const Text(
+                            'Sign Up',
                             style: TextStyle(
                               color: Color(0xFF0D7A59),
                               fontSize: 14,
                               fontWeight: FontWeight.w800,
                             ),
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ],
                 ),

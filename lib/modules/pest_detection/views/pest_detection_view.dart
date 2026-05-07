@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-
+import '../../../../widgets/bottom_nav.dart';
 import '../../../app/theme/app_colors.dart';
 import '../controllers/pest_detection_controller.dart';
 import 'package:camera/camera.dart';
@@ -14,6 +14,9 @@ class PestDetectionView extends GetView<PestDetectionController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      bottomNavigationBar: const BottomNav(
+  currentIndex: 1,
+),
       body: Stack(
         children: [
           /// BACKGROUND IMAGE

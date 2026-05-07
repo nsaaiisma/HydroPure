@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:hydropure/app/routes/app_routes.dart';
 import 'package:hydropure/app/theme/app_colors.dart';
 
 class RegisterView extends StatefulWidget {
@@ -129,7 +131,7 @@ class _RegisterViewState extends State<RegisterView> {
                               ),
                               minimumSize: const Size(double.infinity, 56),
                             ),
-                            onPressed: () {},
+                            onPressed: () => Get.offNamed(Routes.LOGIN),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               spacing: 12,
@@ -204,27 +206,29 @@ class _RegisterViewState extends State<RegisterView> {
                           ],
                         ),
                       ),
-                      RichText(
-                        text: const TextSpan(
-                          children: [
-                            TextSpan(
-                              text: "Already have an account? ",
-                              style: TextStyle(
-                                color: Color(0xFF3B3B3B),
-                                fontSize: 14,
-                                fontWeight: FontWeight.w500,
-                              ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Text(
+                            "Already have an account? ",
+                            style: TextStyle(
+                              color: Color(0xFF3B3B3B),
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500,
                             ),
-                            TextSpan(
-                              text: 'Sign In',
+                          ),
+                          TextButton(
+                            onPressed: () => Get.toNamed(Routes.LOGIN),
+                            child: const Text(
+                              'Log In',
                               style: TextStyle(
                                 color: AppColors.primary,
                                 fontSize: 14,
                                 fontWeight: FontWeight.w800,
                               ),
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
                     ],
                   ),

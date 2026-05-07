@@ -22,7 +22,7 @@ import '../../modules/alerts/views/alert_view.dart';
 import 'app_routes.dart';
 
 class AppPages {
-  static const initial = Routes.REGISTER;
+  static const initial = Routes.LOGIN;
 
   static final routes = [
     /// Register

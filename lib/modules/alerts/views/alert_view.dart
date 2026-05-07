@@ -14,7 +14,9 @@ class AlertView extends GetView<AlertController> {
     return Scaffold(
 
       backgroundColor: const Color(0xFFF5F5F5),
-      bottomNavigationBar: const BottomNav(),
+      bottomNavigationBar: const BottomNav(
+      currentIndex: 3,
+      ),
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(16),
