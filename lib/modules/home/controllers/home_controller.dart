@@ -1,16 +1,16 @@
 import 'package:get/get.dart';
 
 class HomeController extends GetxController {
-  final plants = [
-    {
-      "name": "Lettuce",
-      "image": "assets/images/lettuce.jpg",
-      "days": "12 days left",
-    },
-    {
-      "name": "Basil",
-      "image": "assets/images/basil.jpg",
-      "days": "5 days left",
-    },
-  ];
+  // final plants = [
+  //   {
+  //     "name": "Lettuce",
+  //     "image": "assets/images/lettuce.jpg",
+  //     "days": "12 days left",
+  //   },
+  //   {
+  //     "name": "Basil",
+  //     "image": "assets/images/basil.jpg",
+  //     "days": "5 days left",
+  //   },
+  // ];
 }

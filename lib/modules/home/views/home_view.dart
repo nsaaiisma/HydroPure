@@ -121,22 +121,22 @@ class HomeView extends GetView<HomeController> {
 
               const SizedBox(height: 20),
 
-              SizedBox(
-                height: 290,
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: controller.plants.length,
-                  itemBuilder: (context, index) {
-                    final plant = controller.plants[index];
+              // SizedBox(
+              //   height: 290,
+              //   child: ListView.builder(
+              //     scrollDirection: Axis.horizontal,
+              //     itemCount: controller.plants.length,
+              //     itemBuilder: (context, index) {
+              //       // final plant = controller.plants[index];
 
-                    return PlantCard(
-                      image: plant['image']!,
-                      title: plant['name']!,
-                      days: plant['days']!,
-                    );
-                  },
-                ),
-              ),
+              //       return PlantCard(
+              //         image: plant['image']!,
+              //         title: plant['name']!,
+              //         days: plant['days']!,
+              //       );
+              //     },
+              //   ),
+              // ),
 
               const SizedBox(height: 30),
 

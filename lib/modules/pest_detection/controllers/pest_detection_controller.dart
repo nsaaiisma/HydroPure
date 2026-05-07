@@ -1,6 +1,7 @@
 import 'package:camera/camera.dart';
 import 'package:get/get.dart';
 import 'package:permission_handler/permission_handler.dart';
+import '../../../app/routes/app_routes.dart';
 
 class PestDetectionController extends GetxController {
 
@@ -50,15 +51,25 @@ class PestDetectionController extends GetxController {
 
   Future<void> takePicture() async {
 
-    if (cameraController == null ||
-        !cameraController!.value.isInitialized) {
-      return;
-    }
-
-    final image = await cameraController!.takePicture();
-
-    print(image.path);
+  if (cameraController == null ||
+      !cameraController!.value.isInitialized) {
+    return;
   }
+
+  final image = await cameraController!.takePicture();
+
+  print(image.path);
+
+  /// simulasi processing AI
+  await Future.delayed(
+    const Duration(seconds: 2),
+  );
+
+  /// pindah ke hasil deteksi
+  Get.toNamed(
+    Routes.DETECTION_RESULT,
+  );
+}
 
   Future<void> switchCamera() async {
 

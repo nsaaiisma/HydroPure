@@ -16,9 +16,13 @@ class BottomNav extends StatelessWidget {
       unselectedItemColor: Colors.black54,
 
       onTap: (index) {
-
+        print (index);
         if (index == 1) {
           Get.toNamed(Routes.PEST_DETECTION);
+        }
+
+        if (index == 2) {
+          Get.toNamed(Routes.DETECTION_RESULT);
         }
 
         if (index == 3) {
@@ -26,8 +30,9 @@ class BottomNav extends StatelessWidget {
         }
 
         if (index == 4) {
-          Get.toNamed(Routes.ALERTS);
-        }
+        print("ALERT CLICKED");
+        Get.toNamed(Routes.ALERT);
+      }
       },
 
       items: const [
