@@ -7,6 +7,50 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:90627798394:android:917b10629ccfcaf03c52c3",
+        "android_client_info": {
+          "package_name": "com.example.hydropure"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "90627798394-bvtse5pf8d6dlbnqlm7qsjpmf5o0g6n6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.hydropure",
+            "certificate_hash": "f5f04a0fe6cfb46a9a58826af71abfdac3650fcd"
+          }
+        },
+        {
+          "client_id": "90627798394-15i78ppj6im69asqf34vbh8f483goapn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAnJCg-JYa6Db6neBlcU_j-edynLFWHAbM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "90627798394-15i78ppj6im69asqf34vbh8f483goapn.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "90627798394-mpaoj2g16t4ff7pbt1u8ru02p0l07fs6.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.hydropure"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:90627798394:android:6087562bfb8a74ea3c52c3",
         "android_client_info": {
           "package_name": "com.harkat.hydropure"
@@ -29,6 +73,13 @@
             {
               "client_id": "90627798394-15i78ppj6im69asqf34vbh8f483goapn.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "90627798394-mpaoj2g16t4ff7pbt1u8ru02p0l07fs6.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.hydropure"
+              }
             }
           ]
         }
