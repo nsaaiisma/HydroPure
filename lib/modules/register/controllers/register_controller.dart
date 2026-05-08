@@ -66,30 +66,24 @@ class RegisterController extends GetxController {
 
       /// SEND EMAIL VERIFICATION
       await userCredential.user?.sendEmailVerification();
+      
+      /// CLEAR CONTROLLERS BEFORE NAVIGATION
+      fullNameController.clear();
+      emailController.clear();
+      passwordController.clear();
+      confirmPasswordController.clear();
+      
       Get.defaultDialog(
         barrierDismissible: false,
-
         title: "Verifikasi Email",
-
         middleText: "Link verifikasi telah dikirim ke:\n\n$email",
-
         textConfirm: "OK",
-
         confirmTextColor: Colors.white,
-
         onConfirm: () {
           Get.back();
           Get.offAllNamed(Routes.LOGIN);
         },
       );
-
-      /// RELOAD USER
-      await FirebaseAuth.instance.currentUser?.reload();
-
-      /// CHECK VERIFIED
-      final isVerified = FirebaseAuth.instance.currentUser?.emailVerified;
-
-      print("EMAIL VERIFIED: $isVerified");
 
     } on FirebaseAuthException catch (e) {
       String message = "Terjadi kesalahan";
@@ -110,17 +104,43 @@ class RegisterController extends GetxController {
     }
   }
   
+  Future<void> registerWithGoogle() async {
+
+  try {
+
+    isLoading.value = true;
+
+    await authService
+        .signInWithGoogle();
+
+    Get.snackbar(
+      "Success",
+      "Login Google berhasil",
+    );
+
+    Get.offAllNamed(
+      Routes.HOME,
+    );
+
+  } catch (e) {
+
+    Get.snackbar(
+      "Google Sign In Failed",
+      e.toString(),
+    );
+
+  } finally {
+
+    isLoading.value = false;
+  }
+}
 
   @override
   void onClose() {
     fullNameController.dispose();
-
     emailController.dispose();
-
     passwordController.dispose();
-
     confirmPasswordController.dispose();
-
     super.onClose();
   }
 }

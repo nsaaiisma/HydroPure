@@ -199,7 +199,10 @@ class _LoginViewState extends State<LoginView> {
                         ),
                         minimumSize: const Size(double.infinity, 56),
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                        final controller = Get.find<LoginController>();
+                        controller.loginWithGoogle();
+                      },
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         spacing: 12,

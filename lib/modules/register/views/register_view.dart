@@ -11,11 +11,8 @@ class RegisterView extends StatefulWidget {
   State<RegisterView> createState() => _RegisterViewState();
 }
 
-class _RegisterViewState
-    extends State<RegisterView> {
-
-  final RegisterController controller =
-      Get.find<RegisterController>();
+class _RegisterViewState extends State<RegisterView> {
+  final RegisterController controller = Get.find<RegisterController>();
 
   bool agree = false;
 
@@ -105,31 +102,27 @@ class _RegisterViewState
                             label: "Full Name",
                             hint: "e.g john Farmer",
                             icon: Icons.person_outline_sharp,
-                            controller: 
-                                controller.fullNameController,
+                            controller: controller.fullNameController,
                           ),
                           _buildInputField(
                             label: "Email Address",
                             hint: "farmer@hydropure.com",
                             icon: Icons.mail_outline,
-                            controller:
-                              controller.emailController,
+                            controller: controller.emailController,
                           ),
                           _buildInputField(
                             label: "Password",
                             hint: "Password",
                             icon: Icons.lock_outlined,
                             obscure: true,
-                            controller: 
-                                controller.passwordController,
+                            controller: controller.passwordController,
                           ),
                           _buildInputField(
                             label: "Confirm",
                             hint: "Password",
                             icon: Icons.shield_outlined,
                             obscure: true,
-                            controller: 
-                                controller.confirmPasswordController,
+                            controller: controller.confirmPasswordController,
                           ),
                           _buildTOC(),
                           ElevatedButton(
@@ -140,7 +133,7 @@ class _RegisterViewState
                               ),
                               minimumSize: const Size(double.infinity, 56),
                             ),
-                            onPressed: () { 
+                            onPressed: () {
                               controller.register();
                             },
                             child: Row(
@@ -192,22 +185,32 @@ class _RegisterViewState
 
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(12),
+
                             side: BorderSide(color: Colors.grey),
                           ),
+
                           minimumSize: const Size(double.infinity, 56),
                         ),
-                        onPressed: () {},
+
+                        onPressed: () {
+                          controller.registerWithGoogle();
+                        },
+
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
+
                           spacing: 12,
+
                           children: [
                             Icon(
                               Icons.g_mobiledata_outlined,
                               color: Colors.black,
                               size: 24,
                             ),
+
                             Text(
                               "Register With Google",
+
                               style: TextStyle(
                                 fontSize: 18,
                                 fontWeight: FontWeight.w600,

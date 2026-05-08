@@ -77,6 +77,10 @@ class LoginController extends GetxController {
         return;
       }
 
+      /// CLEAR CONTROLLERS BEFORE NAVIGATION
+      emailController.clear();
+      passwordController.clear();
+
       Get.snackbar(
         "Success",
         "Login berhasil",
@@ -121,8 +125,29 @@ class LoginController extends GetxController {
     }
   }
 
+  Future<void> loginWithGoogle() async {
+    try {
+      isLoading.value = true;
+      await authService.signInWithGoogle();
+      Get.snackbar(
+        "Success",
+        "Login dengan Google berhasil",
+      );
+      Get.offAllNamed(Routes.HOME);
+    } catch (e) {
+      Get.snackbar(
+        "Google Sign In Failed",
+        e.toString(),
+      );
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
   @override
   void onClose() {
+    emailController.dispose();
+    passwordController.dispose();
     super.onClose();
   }
 }
