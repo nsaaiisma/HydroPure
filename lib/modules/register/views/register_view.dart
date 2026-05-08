@@ -11,13 +11,13 @@ class RegisterView extends StatefulWidget {
   State<RegisterView> createState() => _RegisterViewState();
 }
 
-class _RegisterViewState extends State<RegisterView> {
-  late bool agree;
-  @override
-  void initState() {
-    super.initState();
-    agree = false;
-  }
+class _RegisterViewState
+    extends State<RegisterView> {
+
+  final RegisterController controller =
+      Get.find<RegisterController>();
+
+  bool agree = false;
 
   @override
   Widget build(BuildContext context) {
@@ -105,23 +105,31 @@ class _RegisterViewState extends State<RegisterView> {
                             label: "Full Name",
                             hint: "e.g john Farmer",
                             icon: Icons.person_outline_sharp,
+                            controller: 
+                                controller.fullNameController,
                           ),
                           _buildInputField(
                             label: "Email Address",
                             hint: "farmer@hydropure.com",
                             icon: Icons.mail_outline,
+                            controller:
+                              controller.emailController,
                           ),
                           _buildInputField(
                             label: "Password",
                             hint: "Password",
                             icon: Icons.lock_outlined,
                             obscure: true,
+                            controller: 
+                                controller.passwordController,
                           ),
                           _buildInputField(
                             label: "Confirm",
                             hint: "Password",
                             icon: Icons.shield_outlined,
                             obscure: true,
+                            controller: 
+                                controller.confirmPasswordController,
                           ),
                           _buildTOC(),
                           ElevatedButton(
@@ -132,10 +140,9 @@ class _RegisterViewState extends State<RegisterView> {
                               ),
                               minimumSize: const Size(double.infinity, 56),
                             ),
-                            onPressed: () {
-                            final controller = Get.find<RegisterController>();
-                            controller.register();
-                          },
+                            onPressed: () { 
+                              controller.register();
+                            },
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               spacing: 12,
@@ -249,36 +256,47 @@ class _RegisterViewState extends State<RegisterView> {
     required String label,
     required String hint,
     required IconData icon,
+    required TextEditingController controller,
     bool obscure = false,
   }) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
+
       children: [
         Text(
           label,
           style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 18),
         ),
-        SizedBox(height: 4),
+
+        const SizedBox(height: 4),
+
         Container(
           height: 68,
+
           decoration: BoxDecoration(
             color: const Color(0xFFF1F1F1),
             borderRadius: BorderRadius.circular(18),
           ),
+
           child: TextField(
+            controller: controller,
+
             obscureText: obscure,
+
             style: const TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.w500,
               color: Color(0xFF111111),
             ),
+
             decoration: InputDecoration(
               filled: true,
+
               fillColor: const Color.fromARGB(255, 207, 207, 207),
 
-              // BORDER
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(18),
+
                 borderSide: const BorderSide(
                   color: Color(0xFFF1F1F1),
                   width: 1,
@@ -287,26 +305,26 @@ class _RegisterViewState extends State<RegisterView> {
 
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(18),
+
                 borderSide: BorderSide(color: AppColors.primary, width: 1.5),
               ),
 
-              // ICON
               prefixIcon: Padding(
                 padding: const EdgeInsets.only(left: 18, right: 14),
+
                 child: Icon(icon, size: 28, color: Colors.black),
               ),
 
               prefixIconConstraints: const BoxConstraints(minWidth: 70),
 
-              // HINT
               hintText: hint,
+
               hintStyle: TextStyle(
                 color: Colors.grey,
                 fontSize: 18,
                 fontWeight: FontWeight.w500,
               ),
 
-              // REMOVE DEFAULT LINE
               contentPadding: const EdgeInsets.symmetric(vertical: 24),
             ),
           ),

@@ -19,6 +19,9 @@ import '../../modules/ai_chat/views/ai_chat_view.dart';
 import '../../modules/alerts/bindings/alert_binding.dart';
 import '../../modules/alerts/views/alert_view.dart';
 
+import '../../modules/splash/bindings/splash_binding.dart';
+import '../../modules/splash/views/splash_view.dart';
+
 import 'app_routes.dart';
 
 class AppPages {

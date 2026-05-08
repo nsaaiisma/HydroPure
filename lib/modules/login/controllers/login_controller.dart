@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -19,28 +20,109 @@ class LoginController extends GetxController {
 
   Future<void> login() async {
 
+    final email =
+        emailController.text.trim();
+
+    final password =
+        passwordController.text.trim();
+
+    /// VALIDASI EMAIL
+    if (!GetUtils.isEmail(email)) {
+
+      Get.snackbar(
+        "Invalid Email",
+        "Masukkan email valid",
+      );
+
+      return;
+    }
+
+    /// VALIDASI PASSWORD
+    if (password.isEmpty) {
+
+      Get.snackbar(
+        "Password Empty",
+        "Password wajib diisi",
+      );
+
+      return;
+    }
+
     try {
 
       isLoading.value = true;
 
+      /// LOGIN FIREBASE
       await authService.login(
-        email: emailController.text.trim(),
-        password:
-            passwordController.text.trim(),
+        email: email,
+        password: password,
       );
 
-      Get.offAllNamed(Routes.HOME);
+      /// RELOAD USER
+      await FirebaseAuth.instance
+          .currentUser
+          ?.reload();
 
-    } catch (e) {
+      final user =
+          FirebaseAuth.instance.currentUser;
+
+      /// CHECK EMAIL VERIFIED
+      if (!(user?.emailVerified ?? false)) {
+
+        Get.snackbar(
+          "Email Belum Diverifikasi",
+          "Silakan verifikasi email terlebih dahulu",
+        );
+
+        return;
+      }
+
+      Get.snackbar(
+        "Success",
+        "Login berhasil",
+      );
+
+      /// PINDAH KE HOME
+      Get.offAllNamed(
+        Routes.HOME,
+      );
+
+    } on FirebaseAuthException catch (e) {
+
+      String message =
+          "Login gagal";
+
+      if (e.code == 'user-not-found') {
+
+        message =
+            "Email tidak ditemukan";
+
+      } else if (e.code ==
+          'wrong-password') {
+
+        message =
+            "Password salah";
+
+      } else if (e.code ==
+          'invalid-credential') {
+
+        message =
+            "Email atau password salah";
+      }
 
       Get.snackbar(
         "Login Failed",
-        e.toString(),
+        message,
       );
 
     } finally {
 
       isLoading.value = false;
     }
+  }
+
+  @override
+  void onClose() {
+    super.onClose();
   }
 }

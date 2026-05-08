@@ -116,15 +116,23 @@ class _LoginViewState extends State<LoginView> {
                       spacing: 16,
                       children: [
                         _buildInputField(
-                          label: "Full Name",
-                          hint: "e.g john Farmer",
-                          icon: Icons.person_outline_sharp,
+                          label: "Email Address",
+                          hint: "farmer@hydropure.com",
+                          icon: Icons.mail_outline,
+
+                          controller:
+                              Get.find<LoginController>()
+                                  .emailController,
                         ),
                         _buildInputField(
                           label: "Password",
                           hint: "Password",
                           icon: Icons.lock_outlined,
                           obscure: true,
+
+                          controller:
+                              Get.find<LoginController>()
+                                  .passwordController,
                         ),
                         ElevatedButton(
                           style: ElevatedButton.styleFrom(
@@ -250,6 +258,7 @@ class _LoginViewState extends State<LoginView> {
     required String label,
     required String hint,
     required IconData icon,
+    required TextEditingController controller,
     bool obscure = false,
   }) {
     return Column(
@@ -284,6 +293,7 @@ class _LoginViewState extends State<LoginView> {
             borderRadius: BorderRadius.circular(18),
           ),
           child: TextField(
+            controller: controller,
             obscureText: obscure,
             style: const TextStyle(
               fontSize: 18,
