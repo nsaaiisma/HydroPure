@@ -8,6 +8,7 @@ import '../../../../widgets/market_price_item.dart';
 import '../../../../widgets/plant_card.dart';
 import '../../../app/theme/app_colors.dart';
 import '../controllers/home_controller.dart';
+import '../../../widgets/profile_button.dart';
 
 class HomeView extends GetView<HomeController> {
   const HomeView({super.key});
@@ -25,7 +26,22 @@ class HomeView extends GetView<HomeController> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              appBar: AppBar(
 
+                title: const Text("Home"),
+
+                actions: const [
+
+                  Padding(
+
+                    padding: EdgeInsets.only(
+                      right: 12,
+                    ),
+
+                    child: ProfileButton(),
+                  ),
+                ],
+              ),
               /// HEADER
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,

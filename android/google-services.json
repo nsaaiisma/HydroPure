@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "90627798394-a6eo5908tsrgl9l4p3ehmvhk9qm6ffud.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.hydropure",
+            "certificate_hash": "0fa041ca38128c2e8df262ac104221b80c8771f2"
+          }
+        },
+        {
           "client_id": "90627798394-bvtse5pf8d6dlbnqlm7qsjpmf5o0g6n6.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
