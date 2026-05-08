@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hydropure/app/routes/app_routes.dart';
 import 'package:hydropure/app/theme/app_colors.dart';
+import '../controllers/register_controller.dart';
 
 class RegisterView extends StatefulWidget {
   const RegisterView({super.key});
@@ -131,7 +132,10 @@ class _RegisterViewState extends State<RegisterView> {
                               ),
                               minimumSize: const Size(double.infinity, 56),
                             ),
-                            onPressed: () => Get.offNamed(Routes.LOGIN),
+                            onPressed: () {
+                            final controller = Get.find<RegisterController>();
+                            controller.register();
+                          },
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               spacing: 12,

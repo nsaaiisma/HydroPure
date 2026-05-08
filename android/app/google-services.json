@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "90627798394",
+    "project_id": "hydropure-7bdc3",
+    "storage_bucket": "hydropure-7bdc3.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:90627798394:android:917b10629ccfcaf03c52c3",
+        "android_client_info": {
+          "package_name": "com.example.hydropure"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "90627798394-15i78ppj6im69asqf34vbh8f483goapn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAnJCg-JYa6Db6neBlcU_j-edynLFWHAbM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "90627798394-15i78ppj6im69asqf34vbh8f483goapn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:90627798394:android:6087562bfb8a74ea3c52c3",
+        "android_client_info": {
+          "package_name": "com.harkat.hydropure"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "90627798394-15i78ppj6im69asqf34vbh8f483goapn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAnJCg-JYa6Db6neBlcU_j-edynLFWHAbM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "90627798394-15i78ppj6im69asqf34vbh8f483goapn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

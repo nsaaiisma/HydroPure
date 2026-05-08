@@ -22,7 +22,7 @@ import '../../modules/alerts/views/alert_view.dart';
 import 'app_routes.dart';
 
 class AppPages {
-  static const initial = Routes.LOGIN;
+  static const initial = Routes.SPLASH;
 
   static final routes = [
     /// Register
@@ -63,6 +63,11 @@ class AppPages {
       name: Routes.ALERT,
       page: () => const AlertView(),
       binding: AlertBinding(),
+    ),
+    GetPage(
+      name: Routes.SPLASH,
+      page: () => const SplashView(),
+      binding: SplashBinding(),
     ),
   ];
 }

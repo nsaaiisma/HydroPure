@@ -8,4 +8,5 @@ abstract class Routes {
   static const SETTINGS = '/settings';
   static const DETECTION_RESULT = '/detection-result';
   static const ALERT = '/alert';
+  static const SPLASH = '/splash';
 }

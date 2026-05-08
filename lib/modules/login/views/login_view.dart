@@ -1,7 +1,10 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hydropure/app/routes/app_routes.dart';
 import 'package:hydropure/app/theme/app_colors.dart';
+import '../controllers/login_controller.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({super.key});
@@ -131,7 +134,10 @@ class _LoginViewState extends State<LoginView> {
                             ),
                             minimumSize: const Size(double.infinity, 56),
                           ),
-                          onPressed: () => Get.offAllNamed(Routes.HOME),
+                          onPressed: () {
+                            final controller = Get.find<LoginController>();
+                            controller.login();
+                          },
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             spacing: 12,
