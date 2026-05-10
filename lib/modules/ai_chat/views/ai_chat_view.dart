@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hydropure/widgets/profile_button.dart';
 
 import '../../../app/theme/app_colors.dart';
 import '../../../widgets/bottom_nav.dart';
@@ -18,54 +19,70 @@ class AiChatView extends GetView<AiChatController> {
   Widget build(BuildContext context) {
 
     return Scaffold(
-      backgroundColor: const Color(0xFFF5F5F5),
 
-      bottomNavigationBar: const BottomNav(
-      currentIndex: 2,
+      backgroundColor:
+          const Color(0xFFF5F5F5),
+
+      bottomNavigationBar:
+          const BottomNav(
+        currentIndex: 2,
       ),
 
       body: SafeArea(
+
         child: Column(
+
+          crossAxisAlignment:
+              CrossAxisAlignment.start,
+
           children: [
 
             /// HEADER
             Padding(
-              padding: const EdgeInsets.all(20),
+
+              padding:
+                  const EdgeInsets.all(16),
 
               child: Row(
+
                 mainAxisAlignment:
-                    MainAxisAlignment.spaceBetween,
+                    MainAxisAlignment
+                        .spaceBetween,
 
                 children: [
 
                   Text(
+
                     "HydroPure",
 
-                    style: GoogleFonts.poppins(
-                      fontSize: 36,
-                      fontWeight: FontWeight.bold,
-                      color: AppColors.primary,
+                    style:
+                        GoogleFonts.poppins(
+
+                      fontSize: 32,
+
+                      fontWeight:
+                          FontWeight.bold,
+
+                      color:
+                          AppColors.primary,
                     ),
                   ),
 
-                  const Icon(
-                    Icons.person_outline,
-                    size: 32,
-                  )
+                  const ProfileButton(),
                 ],
               ),
             ),
 
-            const Divider(height: 1),
-
             /// TODAY
             Padding(
+
               padding:
                   const EdgeInsets.symmetric(
-                vertical: 18,
+                horizontal: 16,
               ),
 
               child: Container(
+
                 padding:
                     const EdgeInsets.symmetric(
                   horizontal: 24,
@@ -73,58 +90,85 @@ class AiChatView extends GetView<AiChatController> {
                 ),
 
                 decoration: BoxDecoration(
-                  color: Colors.grey.shade200,
+
+                  color:
+                      Colors.grey.shade200,
+
                   borderRadius:
-                      BorderRadius.circular(20),
+                      BorderRadius.circular(
+                    20,
+                  ),
                 ),
 
                 child: Text(
+
                   "Today",
 
-                  style: GoogleFonts.poppins(
-                    fontWeight: FontWeight.w500,
+                  style:
+                      GoogleFonts.poppins(
+
+                    fontWeight:
+                        FontWeight.w500,
                   ),
                 ),
               ),
             ),
 
-            /// CHAT
+            const SizedBox(height: 20),
+
+            /// CHAT LIST
             Expanded(
-              child: Obx(() => ListView.builder(
-                padding:
-                    const EdgeInsets.symmetric(
-                  horizontal: 20,
-                ),
 
-                itemCount:
-                    controller.messages.length,
+              child: Obx(
 
-                itemBuilder: (context, index) {
+                () => ListView.builder(
 
-                  final chat =
-                      controller.messages[index];
+                  padding:
+                      const EdgeInsets.symmetric(
+                    horizontal: 20,
+                  ),
 
-                  if (chat['isAi']) {
+                  itemCount:
+                      controller.messages.length,
 
-                    return AiMessageBubble(
-                      message: chat['message'],
-                      time: chat['time'],
+                  itemBuilder:
+                      (context, index) {
+
+                    final chat =
+                        controller.messages[index];
+
+                    if (chat['isAi']) {
+
+                      return AiMessageBubble(
+
+                        message:
+                            chat['message'],
+
+                        time:
+                            chat['time'],
+                      );
+                    }
+
+                    return UserMessageBubble(
+
+                      message:
+                          chat['message'],
+
+                      time:
+                          chat['time'],
                     );
-                  }
-
-                  return UserMessageBubble(
-                    message: chat['message'],
-                    time: chat['time'],
-                  );
-                },
-              )),
+                  },
+                ),
+              ),
             ),
 
             /// INPUT
-            Padding(
-              padding: const EdgeInsets.all(20),
-              child: const ChatInput(),
-            )
+            const Padding(
+
+              padding: EdgeInsets.all(20),
+
+              child: ChatInput(),
+            ),
           ],
         ),
       ),

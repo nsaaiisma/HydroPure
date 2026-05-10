@@ -26,6 +26,7 @@ class RegisterController extends GetxController {
       isLoading.value = true;
 
       await authService.register(
+        username: nameController.text.trim(),
         email: emailController.text.trim(),
         password:
             passwordController.text.trim(),

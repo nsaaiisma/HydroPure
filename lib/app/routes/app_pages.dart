@@ -19,6 +19,9 @@ import '../../modules/ai_chat/views/ai_chat_view.dart';
 import '../../modules/alerts/bindings/alert_binding.dart';
 import '../../modules/alerts/views/alert_view.dart';
 
+import '../../modules/market_price/bindings/market_price_binding.dart';
+import '../../modules/market_price/views/market_price_view.dart';
+
 import '../../modules/splash/bindings/splash_binding.dart';
 import '../../modules/splash/views/splash_view.dart';
 
@@ -71,6 +74,11 @@ class AppPages {
       name: Routes.SPLASH,
       page: () => const SplashView(),
       binding: SplashBinding(),
+    ),
+    GetPage(
+      name: Routes.MARKET_PRICE,
+      page: () => MarketPriceView(),
+      binding: MarketPriceBinding(),
     ),
   ];
 }

@@ -9,4 +9,5 @@ abstract class Routes {
   static const DETECTION_RESULT = '/detection-result';
   static const ALERT = '/alert';
   static const SPLASH = '/splash';
+  static const MARKET_PRICE = '/market-price';
 }

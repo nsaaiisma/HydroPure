@@ -17,15 +17,6 @@ class ProfileButton
         Get.put(ProfileController());
 
     return PopupMenuButton(
-
-      icon: const CircleAvatar(
-        radius: 20,
-
-        child: Icon(
-          Icons.person,
-        ),
-      ),
-
       itemBuilder: (context) => [
 
         const PopupMenuItem(

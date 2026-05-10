@@ -10,10 +10,12 @@ class AuthService {
 
   /// REGISTER
   Future<UserCredential> register({
+    required String username,
     required String email,
     required String password,
   }) async {
     return await _auth.createUserWithEmailAndPassword(
+      username: username,
       email: email,
       password: password,
     );

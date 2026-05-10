@@ -3,6 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hydropure/app/theme/app_colors.dart';
+import 'package:hydropure/widgets/profile_button.dart';
 import '../../../../widgets/bottom_nav.dart';
 import '../controllers/alert_controller.dart';
 
@@ -25,41 +27,19 @@ class AlertView extends GetView<AlertController> {
             children: [
 
               /// HEADER
-              Row(
+             Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-
-                  Row(
-                    children: [
-
-                      const Icon(
-                        Icons.eco,
-                        color: Color(0xFF0B5D3B),
-                      ),
-
-                      const SizedBox(width: 8),
-
-                      Text(
-                        "HydroPure",
-                        style: GoogleFonts.poppins(
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
-                          color: const Color(0xFF0B5D3B),
-                        ),
-                      ),
-                    ],
+                  Text(
+                    "HydroPure",
+                    style: GoogleFonts.poppins(
+                      fontSize: 32,
+                      fontWeight: FontWeight.bold,
+                      color: AppColors.primary,
+                    ),
                   ),
-
-                  Row(
-                    children: const [
-
-                      Icon(Icons.search),
-
-                      SizedBox(width: 14),
-
-                      Icon(Icons.person_outline),
-
-                    ],
+                  const CircleAvatar(
+                    child: ProfileButton(),
                   )
                 ],
               ),

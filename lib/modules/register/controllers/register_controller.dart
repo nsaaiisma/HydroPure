@@ -60,6 +60,7 @@ class RegisterController extends GetxController {
 
       /// REGISTER FIREBASE
       final userCredential = await authService.register(
+        username: fullName,
         email: email,
         password: password,
       );
