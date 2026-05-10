@@ -18,29 +18,6 @@ class HomeView extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      //     appBar: AppBar(
-
-      //   title: Text(
-      //                   "HydroPure",
-      //                   style: GoogleFonts.poppins(
-      //                     fontSize: 32,
-      //                     fontWeight: FontWeight.bold,
-      //                     color: AppColors.primary,
-      //                   ),
-      //                 ),
-
-    
-
-      //     Padding(
-
-      //       padding: EdgeInsets.only(
-      //         right: 12,
-      //       ),
-
-      //       child: ProfileButton(),
-      //     ),
-      //   ],
-      // ),
       backgroundColor: AppColors.background,
       bottomNavigationBar: BottomNav(currentIndex: 0),
       body: SafeArea(
