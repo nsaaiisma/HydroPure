@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hydropure/app/routes/app_routes.dart';
+import 'package:hydropure/app/services/api_service.dart';
 
 import '../../../app/services/auth_service.dart';
 
@@ -56,7 +57,7 @@ class RegisterController extends GetxController {
     }
 
     try {
-      isLoading.value = true;
+      // isLoading.value = true;
 
       /// REGISTER FIREBASE
       final userCredential = await authService.register(
@@ -64,28 +65,39 @@ class RegisterController extends GetxController {
         email: email,
         password: password,
       );
-
-      /// SEND EMAIL VERIFICATION
-      await userCredential.user?.sendEmailVerification();
+      Get.dialog(
+        const Center(child: CircularProgressIndicator()),
+        barrierDismissible: false,
+      );
+      final success = await ApiService().sendOtp(email: email);
       
+      if (success) {
+        Get.toNamed(Routes.OTP, arguments: email);
+      } else {
+        Get.snackbar("Error", "Gagal mengirim OTP");
+      }
+      Get.back();
+
       /// CLEAR CONTROLLERS BEFORE NAVIGATION
       fullNameController.clear();
       emailController.clear();
       passwordController.clear();
       confirmPasswordController.clear();
-      
+
       Get.defaultDialog(
         barrierDismissible: false,
         title: "Verifikasi Email",
-        middleText: "Link verifikasi telah dikirim ke:\n\n$email",
+        middleText:
+            "Akun berhasil dibuat.\n\n"
+            "Link verifikasi telah dikirim ke:\n\n$email\n\n"
+            "Silakan cek email.",
         textConfirm: "OK",
         confirmTextColor: Colors.white,
         onConfirm: () {
-          Get.back();
-          Get.offAllNamed(Routes.LOGIN);
-        },
+          Get.offAllNamed(Routes.OTP, arguments: email);
+        }
       );
-
+    
     } on FirebaseAuthException catch (e) {
       String message = "Terjadi kesalahan";
 
@@ -104,37 +116,22 @@ class RegisterController extends GetxController {
       isLoading.value = false;
     }
   }
-  
+
   Future<void> registerWithGoogle() async {
+    try {
+      isLoading.value = true;
 
-  try {
+      await authService.signInWithGoogle();
 
-    isLoading.value = true;
+      Get.snackbar("Success", "Login Google berhasil");
 
-    await authService
-        .signInWithGoogle();
-
-    Get.snackbar(
-      "Success",
-      "Login Google berhasil",
-    );
-
-    Get.offAllNamed(
-      Routes.HOME,
-    );
-
-  } catch (e) {
-
-    Get.snackbar(
-      "Google Sign In Failed",
-      e.toString(),
-    );
-
-  } finally {
-
-    isLoading.value = false;
+      Get.offAllNamed(Routes.HOME);
+    } catch (e) {
+      Get.snackbar("Google Sign In Failed", e.toString());
+    } finally {
+      isLoading.value = false;
+    }
   }
-}
 
   @override
   void onClose() {

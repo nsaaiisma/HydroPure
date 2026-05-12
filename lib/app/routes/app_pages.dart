@@ -25,6 +25,9 @@ import '../../modules/market_price/views/market_price_view.dart';
 import '../../modules/splash/bindings/splash_binding.dart';
 import '../../modules/splash/views/splash_view.dart';
 
+import '../../modules/otp/bindings/otp_binding.dart';
+import '../../modules/otp/views/otp_view.dart';
+
 import 'app_routes.dart';
 
 class AppPages {
@@ -44,7 +47,6 @@ class AppPages {
       page: () => const LoginView(),
       binding: LoginBinding(),
     ),
-
     GetPage(
       name: Routes.HOME,
       page: () => const HomeView(),
@@ -79,6 +81,11 @@ class AppPages {
       name: Routes.MARKET_PRICE,
       page: () => MarketPriceView(),
       binding: MarketPriceBinding(),
+    ),
+    GetPage(
+      name: Routes.OTP,
+      page: () => const OtpView(),
+      binding: OtpBinding(),
     ),
   ];
 }

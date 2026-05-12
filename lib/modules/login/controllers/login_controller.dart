@@ -1,126 +1,104 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../../../app/routes/app_routes.dart';
 import '../../../app/services/auth_service.dart';
 
 class LoginController extends GetxController {
+  final emailController = TextEditingController();
 
-  final emailController =
-      TextEditingController();
+  final passwordController = TextEditingController();
 
-  final passwordController =
-      TextEditingController();
-
-  final AuthService authService =
-      AuthService();
+  final AuthService authService = AuthService();
 
   RxBool isLoading = false.obs;
 
+  @override
+  void dispose() {
+    emailController.dispose();
+
+    passwordController.dispose();
+
+    super.dispose();
+  }
+
   Future<void> login() async {
+    final email = emailController.text.trim();
 
-    final email =
-        emailController.text.trim();
-
-    final password =
-        passwordController.text.trim();
+    final password = passwordController.text.trim();
 
     /// VALIDASI EMAIL
     if (!GetUtils.isEmail(email)) {
-
-      Get.snackbar(
-        "Invalid Email",
-        "Masukkan email valid",
-      );
+      Get.snackbar("Invalid Email", "Masukkan email valid");
 
       return;
     }
 
     /// VALIDASI PASSWORD
     if (password.isEmpty) {
-
-      Get.snackbar(
-        "Password Empty",
-        "Password wajib diisi",
-      );
+      Get.snackbar("Password Empty", "Password wajib diisi");
 
       return;
     }
 
     try {
-
       isLoading.value = true;
 
       /// LOGIN FIREBASE
-      await authService.login(
-        email: email,
-        password: password,
-      );
+      await authService.login(email: email, password: password);
 
-      /// RELOAD USER
-      await FirebaseAuth.instance
-          .currentUser
-          ?.reload();
+      final uid = FirebaseAuth.instance.currentUser!.uid;
 
-      final user =
-          FirebaseAuth.instance.currentUser;
+      final doc = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(uid)
+          .get();
 
-      /// CHECK EMAIL VERIFIED
-      if (!(user?.emailVerified ?? false)) {
+      final verified = doc['verified'] ?? false;
 
-        Get.snackbar(
-          "Email Belum Diverifikasi",
-          "Silakan verifikasi email terlebih dahulu",
+      /// CHECK VERIFIED
+      if (!verified) {
+        Get.defaultDialog(
+          title: "Email Belum Diverifikasi",
+
+          middleText: "Silakan verifikasi OTP terlebih dahulu.",
+
+          textConfirm: "OK",
+
+          confirmTextColor: Colors.white,
+
+          onConfirm: () {
+            Get.back();
+          },
         );
 
         return;
       }
 
-      /// CLEAR CONTROLLERS BEFORE NAVIGATION
+      /// CLEAR CONTROLLER
       emailController.clear();
+
       passwordController.clear();
 
-      Get.snackbar(
-        "Success",
-        "Login berhasil",
-      );
+      Get.snackbar("Success", "Login berhasil");
 
       /// PINDAH KE HOME
-      Get.offAllNamed(
-        Routes.HOME,
-      );
-
+      Get.offAllNamed(Routes.HOME);
     } on FirebaseAuthException catch (e) {
-
-      String message =
-          "Login gagal";
+      String message = "Login gagal";
 
       if (e.code == 'user-not-found') {
-
-        message =
-            "Email tidak ditemukan";
-
-      } else if (e.code ==
-          'wrong-password') {
-
-        message =
-            "Password salah";
-
-      } else if (e.code ==
-          'invalid-credential') {
-
-        message =
-            "Email atau password salah";
+        message = "Email tidak ditemukan";
+      } else if (e.code == 'wrong-password') {
+        message = "Password salah";
+      } else if (e.code == 'invalid-credential') {
+        message = "Email atau password salah";
       }
 
-      Get.snackbar(
-        "Login Failed",
-        message,
-      );
-
+      Get.snackbar("Login Failed", message);
     } finally {
-
       isLoading.value = false;
     }
   }
@@ -128,17 +106,64 @@ class LoginController extends GetxController {
   Future<void> loginWithGoogle() async {
     try {
       isLoading.value = true;
+
       await authService.signInWithGoogle();
-      Get.snackbar(
-        "Success",
-        "Login dengan Google berhasil",
-      );
+
+      Get.snackbar("Success", "Login dengan Google berhasil");
+
       Get.offAllNamed(Routes.HOME);
     } catch (e) {
-      Get.snackbar(
-        "Google Sign In Failed",
-        e.toString(),
+      Get.snackbar("Google Sign In Failed", e.toString());
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
+  Future<void> forgotPassword() async {
+    final email = emailController.text.trim();
+
+    /// VALIDASI EMAIL
+    if (!GetUtils.isEmail(email)) {
+      Get.snackbar("Invalid Email", "Masukkan email yang valid");
+
+      return;
+    }
+
+    try {
+      isLoading.value = true;
+
+      await authService.resetPassword(email: email);
+
+      Get.defaultDialog(
+        title: "Reset Password",
+
+        middleText:
+            "Link reset password telah dikirim ke:\n\n$email\n\n"
+            "Silakan:\n"
+            "1. Buka email\n"
+            "2. Cek folder Inbox/Spam\n"
+            "3. Klik link reset password\n"
+            "4. Buat password baru\n"
+            "5. Login kembali",
+
+        textConfirm: "OK",
+
+        confirmTextColor: Colors.white,
+
+        onConfirm: () {
+          Get.back();
+        },
       );
+    } on FirebaseAuthException catch (e) {
+      String message = "Terjadi kesalahan";
+
+      if (e.code == 'user-not-found') {
+        message = "Email tidak ditemukan";
+      }
+
+      Get.snackbar("Reset Failed", message);
+    } catch (e) {
+      Get.snackbar("Error", e.toString());
     } finally {
       isLoading.value = false;
     }
@@ -147,7 +172,9 @@ class LoginController extends GetxController {
   @override
   void onClose() {
     emailController.dispose();
+
     passwordController.dispose();
+
     super.onClose();
   }
 }

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hydropure/app/routes/app_routes.dart';
 import 'package:hydropure/app/theme/app_colors.dart';
+import 'package:hydropure/modules/login/views/login_view.dart' as controller;
 import '../controllers/login_controller.dart';
 
 class LoginView extends StatefulWidget {
@@ -16,6 +17,7 @@ class LoginView extends StatefulWidget {
 class _LoginViewState extends State<LoginView> {
   @override
   Widget build(BuildContext context) {
+    final controller = Get.find<LoginController>();
     return SingleChildScrollView(
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 80),
@@ -121,8 +123,7 @@ class _LoginViewState extends State<LoginView> {
                           icon: Icons.mail_outline,
 
                           controller:
-                              Get.find<LoginController>()
-                                  .emailController,
+                              controller.emailController,
                         ),
                         _buildInputField(
                           label: "Password",
@@ -131,8 +132,7 @@ class _LoginViewState extends State<LoginView> {
                           obscure: true,
 
                           controller:
-                              Get.find<LoginController>()
-                                  .passwordController,
+                                  controller.passwordController,
                         ),
                         ElevatedButton(
                           style: ElevatedButton.styleFrom(
@@ -258,36 +258,48 @@ class _LoginViewState extends State<LoginView> {
   }
 
   static Widget _buildInputField({
-    required String label,
-    required String hint,
-    required IconData icon,
-    required TextEditingController controller,
-    bool obscure = false,
-  }) {
+  required TextEditingController controller,
+  required String label,
+  required String hint,
+  required IconData icon,
+  bool obscure = false,
+}) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+  crossAxisAlignment:
+      CrossAxisAlignment.start,
+  children: [
+    Row(
+      mainAxisAlignment:
+          MainAxisAlignment
+              .spaceBetween,
       children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              label,
-              style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 18),
-            ),
-            if (obscure)
-              MouseRegion(
-                cursor: SystemMouseCursors.click,
-                child: Text(
-                  'Forgot Password ?',
-                  style: const TextStyle(
-                    fontWeight: FontWeight.w500,
-                    fontSize: 14,
-                    color: AppColors.primary,
-                  ),
-                ),
-              ),
-          ],
+        Text(
+          label,
+          style: const TextStyle(
+            fontWeight:
+                FontWeight.w500,
+            fontSize: 18,
+          ),
         ),
+        if (obscure)
+          GestureDetector(
+            onTap: () {Get.find<LoginController>()
+            .forgotPassword();
+        },
+            child: const Text(
+              'Forgot Password ?',
+              style: TextStyle(
+                fontWeight:
+                    FontWeight.w500,
+                fontSize: 14,
+                color:
+                    AppColors.primary,
+              ),
+            ),
+          ),
+      ],
+    ),
+  
         SizedBox(height: 4),
         Container(
           height: 68,

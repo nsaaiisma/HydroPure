@@ -10,4 +10,5 @@ abstract class Routes {
   static const ALERT = '/alert';
   static const SPLASH = '/splash';
   static const MARKET_PRICE = '/market-price';
+  static const OTP = '/otp';
 }
