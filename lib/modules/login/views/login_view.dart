@@ -142,9 +142,7 @@ class _LoginViewState extends State<LoginView> {
                             ),
                             minimumSize: const Size(double.infinity, 56),
                           ),
-                          onPressed: () {
-                            final controller = Get.find<LoginController>();
-                            controller.login();
+                          onPressed: () {controller.login();
                           },
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,

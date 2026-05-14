@@ -16,12 +16,12 @@ class LoginController extends GetxController {
   RxBool isLoading = false.obs;
 
   @override
-  void dispose() {
+  void onClose() {
     emailController.dispose();
 
     passwordController.dispose();
 
-    super.dispose();
+    super.onClose();
   }
 
   Future<void> login() async {
@@ -167,14 +167,5 @@ class LoginController extends GetxController {
     } finally {
       isLoading.value = false;
     }
-  }
-
-  @override
-  void onClose() {
-    emailController.dispose();
-
-    passwordController.dispose();
-
-    super.onClose();
   }
 }
