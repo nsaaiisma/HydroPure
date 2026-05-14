@@ -122,8 +122,7 @@ class _LoginViewState extends State<LoginView> {
                           hint: "farmer@hydropure.com",
                           icon: Icons.mail_outline,
 
-                          controller:
-                              controller.emailController,
+                          controller: controller.emailController,
                         ),
                         _buildInputField(
                           label: "Password",
@@ -131,8 +130,7 @@ class _LoginViewState extends State<LoginView> {
                           icon: Icons.lock_outlined,
                           obscure: true,
 
-                          controller:
-                                  controller.passwordController,
+                          controller: controller.passwordController,
                         ),
                         ElevatedButton(
                           style: ElevatedButton.styleFrom(
@@ -142,14 +140,17 @@ class _LoginViewState extends State<LoginView> {
                             ),
                             minimumSize: const Size(double.infinity, 56),
                           ),
-                          onPressed: () {controller.login();
+                          onPressed: () {
+                            controller.login();
                           },
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             spacing: 12,
                             children: [
                               Text(
-                                "Login",
+                                controller.isLoading.value
+                                    ? "Loading..."
+                                    : "Login",
                                 style: TextStyle(
                                   fontSize: 18,
                                   fontWeight: FontWeight.w600,
@@ -256,48 +257,39 @@ class _LoginViewState extends State<LoginView> {
   }
 
   static Widget _buildInputField({
-  required TextEditingController controller,
-  required String label,
-  required String hint,
-  required IconData icon,
-  bool obscure = false,
-}) {
+    required TextEditingController controller,
+    required String label,
+    required String hint,
+    required IconData icon,
+    bool obscure = false,
+  }) {
     return Column(
-  crossAxisAlignment:
-      CrossAxisAlignment.start,
-  children: [
-    Row(
-      mainAxisAlignment:
-          MainAxisAlignment
-              .spaceBetween,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          label,
-          style: const TextStyle(
-            fontWeight:
-                FontWeight.w500,
-            fontSize: 18,
-          ),
-        ),
-        if (obscure)
-          GestureDetector(
-            onTap: () {Get.find<LoginController>()
-            .forgotPassword();
-        },
-            child: const Text(
-              'Forgot Password ?',
-              style: TextStyle(
-                fontWeight:
-                    FontWeight.w500,
-                fontSize: 14,
-                color:
-                    AppColors.primary,
-              ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              label,
+              style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 18),
             ),
-          ),
-      ],
-    ),
-  
+            if (obscure)
+              GestureDetector(
+                onTap: () {
+                  Get.find<LoginController>().forgotPassword();
+                },
+                child: const Text(
+                  'Forgot Password ?',
+                  style: TextStyle(
+                    fontWeight: FontWeight.w500,
+                    fontSize: 14,
+                    color: AppColors.primary,
+                  ),
+                ),
+              ),
+          ],
+        ),
+
         SizedBox(height: 4),
         Container(
           height: 68,

@@ -70,7 +70,7 @@ class RegisterController extends GetxController {
         barrierDismissible: false,
       );
       final success = await ApiService().sendOtp(email: email);
-      
+
       if (success) {
         Get.toNamed(Routes.OTP, arguments: email);
       } else {
@@ -84,20 +84,19 @@ class RegisterController extends GetxController {
       passwordController.clear();
       confirmPasswordController.clear();
 
-      Get.defaultDialog(
-        barrierDismissible: false,
-        title: "Verifikasi Email",
-        middleText:
-            "Akun berhasil dibuat.\n\n"
-            "Link verifikasi telah dikirim ke:\n\n$email\n\n"
-            "Silakan cek email.",
-        textConfirm: "OK",
-        confirmTextColor: Colors.white,
-        onConfirm: () {
-          Get.offAllNamed(Routes.OTP, arguments: email);
-        }
-      );
-    
+      // Get.defaultDialog(
+      //   barrierDismissible: false,
+      //   title: "Verifikasi Email",
+      //   middleText:
+      //       "Akun berhasil dibuat.\n\n"
+      //       "Link verifikasi telah dikirim ke:\n\n$email\n\n"
+      //       "Silakan cek email.",
+      //   textConfirm: "OK",
+      //   confirmTextColor: Colors.white,
+      //   onConfirm: () {
+      //   }
+      // );
+      Get.offAllNamed(Routes.OTP, arguments: email);
     } on FirebaseAuthException catch (e) {
       String message = "Terjadi kesalahan";
 

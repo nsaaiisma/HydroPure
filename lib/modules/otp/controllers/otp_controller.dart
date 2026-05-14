@@ -28,7 +28,7 @@ class OtpController extends GetxController {
   }
 
   Future<void> verifyOtp() async {
-    final otp = otpController.text.trim();
+    final otp = otpController.text.trim().toString();
 
     if (otp.length != 6) {
       Get.snackbar("Invalid OTP", "OTP harus 6 digit");

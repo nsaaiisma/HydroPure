@@ -32,50 +32,55 @@ class LoginController extends GetxController {
     /// VALIDASI EMAIL
     if (!GetUtils.isEmail(email)) {
       Get.snackbar("Invalid Email", "Masukkan email valid");
-
+      print('invalid email');
       return;
     }
 
     /// VALIDASI PASSWORD
     if (password.isEmpty) {
+      print('pasword empty');
       Get.snackbar("Password Empty", "Password wajib diisi");
 
       return;
     }
-
+    // Get.dialog(
+    //   const Center(child: CircularProgressIndicator()),
+    //   barrierDismissible: false,
+    // );
     try {
+      print('Starting login...');
       isLoading.value = true;
 
       /// LOGIN FIREBASE
       await authService.login(email: email, password: password);
 
-      final uid = FirebaseAuth.instance.currentUser!.uid;
+      // final uid = FirebaseAuth.instance.currentUser!.uid;
 
-      final doc = await FirebaseFirestore.instance
-          .collection('users')
-          .doc(uid)
-          .get();
+      // final doc = await FirebaseFirestore.instance
+      //     .collection('users')
+      //     .doc(uid)
+      //     .get();
 
-      final verified = doc['verified'] ?? false;
+      // final verified = doc['verified'] ?? false;
 
-      /// CHECK VERIFIED
-      if (!verified) {
-        Get.defaultDialog(
-          title: "Email Belum Diverifikasi",
+      // /// CHECK VERIFIED
+      // if (!verified) {
+      //   Get.defaultDialog(
+      //     title: "Email Belum Diverifikasi",
 
-          middleText: "Silakan verifikasi OTP terlebih dahulu.",
+      //     middleText: "Silakan verifikasi OTP terlebih dahulu.",
 
-          textConfirm: "OK",
+      //     textConfirm: "OK",
 
-          confirmTextColor: Colors.white,
+      //     confirmTextColor: Colors.white,
 
-          onConfirm: () {
-            Get.back();
-          },
-        );
+      //     onConfirm: () {
+      //       Get.back();
+      //     },
+      //   );
 
-        return;
-      }
+      //   return;
+      // }
 
       /// CLEAR CONTROLLER
       emailController.clear();
@@ -87,7 +92,7 @@ class LoginController extends GetxController {
       /// PINDAH KE HOME
       Get.offAllNamed(Routes.HOME);
     } on FirebaseAuthException catch (e) {
-      String message = "Login gagal";
+      String message = e.message.toString();
 
       if (e.code == 'user-not-found') {
         message = "Email tidak ditemukan";
