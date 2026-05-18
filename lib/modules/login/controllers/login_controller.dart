@@ -61,26 +61,26 @@ class LoginController extends GetxController {
 
       final doc = await _firestore.collection('otp_codes').doc(email).get();
 
-      // final verified = doc['verified'] ?? false;
+      final verified = doc['verified'] ?? false;
 
-      // /// CHECK VERIFIED
-      // if (!verified) {
-      //   Get.defaultDialog(
-      //     title: "Email Belum Diverifikasi",
+      /// CHECK VERIFIED
+      if (!verified) {
+        Get.defaultDialog(
+          title: "Email Belum Diverifikasi",
 
-      //     middleText: "Silakan verifikasi OTP terlebih dahulu.",
+          middleText: "Silakan verifikasi OTP terlebih dahulu.",
 
-      //     textConfirm: "OK",
+          textConfirm: "OK",
 
-      //     confirmTextColor: Colors.white,
+          confirmTextColor: Colors.white,
 
-      //     onConfirm: () {
-      //       Get.back();
-      //     },
-      //   );
+          onConfirm: () {
+            Get.back();
+          },
+        );
 
-      //   return;
-      // }
+        return;
+      }
 
       /// CLEAR CONTROLLER
       emailController.clear();
