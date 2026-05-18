@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -12,7 +13,10 @@ class LoginController extends GetxController {
   final passwordController = TextEditingController();
 
   final AuthService authService = AuthService();
-
+  final FirebaseFirestore _firestore = FirebaseFirestore.instanceFor(
+    app: Firebase.app(), // Ambil app yang sudah di-initialize di main.dart
+    databaseId: 'hydropure', // Pastikan ID ini sama dengan di Console
+  );
   RxBool isLoading = false.obs;
 
   @override
@@ -43,18 +47,17 @@ class LoginController extends GetxController {
       return;
     }
 
+    Get.dialog(
+      const Center(child: CircularProgressIndicator()),
+      barrierDismissible: false,
+    );
     try {
       isLoading.value = true;
 
       /// LOGIN FIREBASE
       await authService.login(email: email, password: password);
 
-      final uid = FirebaseAuth.instance.currentUser!.uid;
-
-      final doc = await FirebaseFirestore.instance
-          .collection('users')
-          .doc(uid)
-          .get();
+      final doc = await _firestore.collection('otp_codes').doc(email).get();
 
       final verified = doc['verified'] ?? false;
 
@@ -81,7 +84,7 @@ class LoginController extends GetxController {
       emailController.clear();
 
       passwordController.clear();
-
+      Get.back();
       Get.snackbar("Success", "Login berhasil");
 
       /// PINDAH KE HOME
