@@ -21,7 +21,6 @@ class AuthService {
     required String password,
   }) async {
     final credential = await _auth.createUserWithEmailAndPassword(
-      username : username,
       email: email,
       password: password,
     );
