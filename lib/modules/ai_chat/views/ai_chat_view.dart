@@ -162,6 +162,23 @@ class AiChatView extends GetView<AiChatController> {
               ),
             ),
 
+                      Obx(() {
+
+            if (controller.isLoading.value) {
+
+              return const Padding(
+
+                padding: EdgeInsets.only(bottom: 10),
+
+                child: Center(
+                  child: CircularProgressIndicator(),
+                ),
+              );
+            }
+
+            return const SizedBox();
+          }),
+
             /// INPUT
             const Padding(
 

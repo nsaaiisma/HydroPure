@@ -1,62 +1,94 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:http/http.dart' as http;
 
 class AiChatController extends GetxController {
 
   final TextEditingController messageController =
       TextEditingController();
 
-  RxList<Map<String, dynamic>> messages =
-      <Map<String, dynamic>>[
+  /// LIST CHAT
+  var messages = <Map<String, dynamic>>[
     {
+      "message": "Halo! Saya HydroPure AI 👋",
+      "time": "Now",
       "isAi": true,
-      "message":
-          "Hello Farmer John! I’m your HydroPure AI Assistant. How can I help optimize your hydroponic system today? I’m monitoring your pH levels and nutrient flow in real-time.",
-      "time": "10:42 AM",
-    },
-
-    {
-      "isAi": false,
-      "message":
-          "My reservoir pH seems to be fluctuating quite a bit today. Is that normal for the current growth stage?",
-      "time": "10:45 AM",
-    },
-
-    {
-      "isAi": true,
-      "message":
-          "It looks like your current growth stage (Flowering) increases nutrient uptake, which can cause these minor pH shifts.",
-      "time": "10:46 AM",
-    },
+    }
   ].obs;
 
-  void sendMessage() {
+  /// LOADING
+  var isLoading = false.obs;
 
-    if (messageController.text.trim().isEmpty) {
-      return;
-    }
+  /// GANTI DENGAN BACKEND KAMU
+  final String baseUrl =
+      "http://127.0.0.1:5000/chat";
 
+  /// SEND MESSAGE
+  Future<void> sendMessage() async {
+
+    final text =
+        messageController.text.trim();
+
+    if (text.isEmpty) return;
+
+    /// TAMBAH PESAN USER
     messages.add({
-      "isAi": false,
-      "message": messageController.text,
+      "message": text,
       "time": "Now",
+      "isAi": false,
     });
-
-    final userMessage = messageController.text;
 
     messageController.clear();
 
-    Future.delayed(
-      const Duration(seconds: 1),
-      () {
+    isLoading.value = true;
+
+    try {
+
+      final response = await http.post(
+
+        Uri.parse(baseUrl),
+
+        headers: {
+          "Content-Type": "application/json",
+        },
+
+        body: jsonEncode({
+          "message": text,
+        }),
+      );
+
+      if (response.statusCode == 200) {
+
+        final data =
+            jsonDecode(response.body);
 
         messages.add({
-          "isAi": true,
-          "message":
-              "AI recommendation for: $userMessage",
+          "message": data["reply"],
           "time": "Now",
+          "isAi": true,
         });
-      },
-    );
+
+      } else {
+
+        messages.add({
+          "message": "Server Error",
+          "time": "Now",
+          "isAi": true,
+        });
+      }
+
+    } catch (e) {
+
+      messages.add({
+        "message":
+            "Tidak bisa connect ke backend",
+        "time": "Now",
+        "isAi": true,
+      });
+    }
+
+    isLoading.value = false;
   }
 }

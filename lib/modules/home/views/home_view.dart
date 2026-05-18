@@ -42,7 +42,7 @@ class HomeView extends GetView<HomeController> {
                 ],
               ),
 
-             SizedBox(height: 30),
+              SizedBox(height: 30),
 
               /// WELCOME
               Obx(
@@ -175,80 +175,103 @@ class HomeView extends GetView<HomeController> {
                 ),
 
                 child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-                  stream: controller.getMarketPrices(),
+                            stream: controller.getMarketPrices(),
+                            builder: (context, snapshot) {
 
-                  builder: (context, snapshot) {
-                    print(
-                      'MarketPrice home snapshot: '
-                      'state=${snapshot.connectionState}, '
-                      'hasData=${snapshot.hasData}, '
-                      'docs=${snapshot.data?.docs.length}, '
-                      'error=${snapshot.error}, metadata= ${snapshot.data?.metadata}',
-                    );
+                              /// LOADING
+                              if (snapshot.connectionState ==
+                                  ConnectionState.waiting) {
 
-                    if (snapshot.hasData){
-                      print ('data ketemu');
-                      for (var doc in snapshot.data!.docs) {
-                        print('Document ${doc.id}: ${doc.data()}');
-                      }
-                    }
+                                return const Center(
+                                  child: CircularProgressIndicator(),
+                                );
+                              }
 
-                    if (snapshot.hasError) {
-                      return Center(
-                        child: Text(
-                          'Error: ${snapshot.error}',
-                          style: TextStyle(color: Colors.red),
-                        ),
-                      );
-                    }
+                              /// TIDAK ADA DATA
+                              if (!snapshot.hasData ||
+                                  snapshot.data!.docs.isEmpty) {
 
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return Center(child: CircularProgressIndicator());
-                    }
+                                return const Center(
+                                  child: Text(
+                                    "Belum ada data harga",
+                                  ),
+                                );
+                              }
 
-                    if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-                      return Center(child: Text("Belum ada data harga"));
-                    }
+                              final docs = snapshot.data!.docs;
 
-                    final docs = snapshot.data!.docs;
+                              return Column(
+                                children: docs.map((doc) {
 
-                    return Column(
-  children: docs.map((doc) {
-    final data = doc.data();
-    
-    // 1. Sesuaikan nama field dengan Firebase (Gunakan 'nama', bukan 'name')
-    final String title = (data['nama'] ?? '-').toString();
+                                  final data =
+                                      doc.data()
+                                          as Map<String, dynamic>;
 
-    // 2. Bersihkan string harga (hilangkan titik) dan ubah ke angka
-    // Contoh: "3.000" -> "3000" -> 3000
-    final String rawPriceStr = (data['harga'] ?? '0').toString().replaceAll('.', '');
-    final int price = int.tryParse(rawPriceStr) ?? 0;
+                                  /// NAMA SAYUR
+                                  final String title =
+                                      (data['nama'] ?? '-')
+                                          .toString();
 
-    // 3. Hitung progress untuk diagram batang
-    // Misal harga tertinggi sayur 20.000
-    double progress = price / 20000;
-    if (progress > 1) progress = 1;
+                                  /// AMBIL HARGA
+                                  /// contoh:
+                                  /// "3.000" -> "3000"
+                                  final String rawPriceStr =
+                                    (data['harga'] ?? '0')
+                                        .toString()
+                                        .replaceAll('Rp', '')
+                                        .replaceAll('.', '')
+                                        .replaceAll(' ', '')
+                                        .trim();
 
-    return Padding(
-      padding: EdgeInsets.only(bottom: 18),
-      child: MarketPriceItem(
-        title: title,
-        price: "Rp ${data['harga']}", // Gunakan format asli dengan titik untuk tampilan
-        value: progress,
-      ),
-    );
-  }).toList(),
-);
+                                  /// STRING -> INT
+                                  final int price =
+                                      int.tryParse(rawPriceStr) ?? 0;
 
-                       
-                  },
+                                  /// MAX HARGA
+                                  const int maxPrice = 100000;
+
+                                  /// PROGRESS BAR
+                                  double progress =
+                                      price / maxPrice;
+
+                                  /// LIMIT MAX 1.0
+                                  if (progress > 1) {
+                                    progress = 1;
+                                  }
+
+                                  /// LIMIT MIN 0
+                                  if (progress < 0) {
+                                    progress = 0;
+                                  }
+
+                                  return Padding(
+                                    padding:
+                                        const EdgeInsets.only(
+                                      bottom: 18,
+                                    ),
+
+                                    child: MarketPriceItem(
+
+                                      /// NAMA
+                                      title: title,
+
+                                      /// FORMAT TAMPILAN HARGA
+                                      price:
+                                          "${data['harga']}",
+
+                                      /// VALUE PROGRESS
+                                      value: progress,
+                                    ),
+                                  );
+                                }).toList(),
+                              );
+                            },
+                          )
+                        )
+                      ]
+                    ),
+                  ),
                 ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}   
-// 2a9c3bd23a26bedc24b3efda586b9508
+              );
+            }
+          }

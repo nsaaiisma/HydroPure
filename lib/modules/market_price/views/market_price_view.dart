@@ -218,7 +218,7 @@ class MarketPriceView extends GetView<MarketPriceController> {
 
                           /// PRICE
                           Text(
-                            "Rp ${item['harga']}",
+                            "${item['harga']}",
 
                             style: GoogleFonts.poppins(
                               fontSize: 18,
