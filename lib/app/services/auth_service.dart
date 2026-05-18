@@ -20,7 +20,12 @@ class AuthService {
     required String email,
     required String password,
   }) async {
+<<<<<<< HEAD
     final credential = await _auth.createUserWithEmailAndPassword(
+=======
+    return await _auth.createUserWithEmailAndPassword(
+      // username: username,
+>>>>>>> c8b415d6c4d9e82be5bd0751d14dcf2e4844fd08
       email: email,
       password: password,
     );
@@ -45,10 +50,15 @@ class AuthService {
     required String email,
     required String password,
   }) async {
-    return await FirebaseAuth.instance.signInWithEmailAndPassword(
-      email: email,
-      password: password,
-    );
+    try {
+      return await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+    } catch (e) {
+      print('error login: $e');
+      return Future.error(e);
+    }
   }
 
   // Inisialisasi di level variabel class
