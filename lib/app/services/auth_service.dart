@@ -34,7 +34,7 @@ class AuthService {
       'name': username,
       'email': email,
       'role': 'Farmer',
-      'status': 'Active',
+      'status': 'Inactive',
       'createdAt': FieldValue.serverTimestamp(),
     });
     return credential;
